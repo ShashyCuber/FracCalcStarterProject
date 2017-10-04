@@ -44,21 +44,21 @@ public class FracCalc {
     	
     	//result = ("whole:" + wholeNum2 + " numerator:" + numerator2 + " denominator:" + denominator2);
        	
-    	String fraction1 = convertToMixed(operand1);
-    	String fraction2 = convertToMixed(operand2);
+    	String fraction1 = convertToImproperFrac(operand1);
+    	String fraction2 = convertToImproperFrac(operand2);
     	
-    	int numerator3 = getNumerator(fraction1);		//a
-    	int denominator3 = getDenominator(fraction1); 	//b
-    	int numerator4 = getNumerator(fraction2);		//c	
-    	int denominator4 = getDenominator(fraction2);	//d
+    	int numeratorFrac1 = getNumerator(fraction1);		//a
+    	int denominatorFrac1 = getDenominator(fraction1); 	//b
+    	int numeratorFrac2 = getNumerator(fraction2);		//c	
+    	int denominatorFrac2 = getDenominator(fraction2);	//d
     	
     	int newNumerator, newDenominator;
     	
     	
     	if (operator.equals("*"))
     	{   
-    		newNumerator = (numerator3 * numerator4);
-    		newDenominator = (denominator3 * denominator4);
+    		newNumerator = (numeratorFrac1 * numeratorFrac2);
+    		newDenominator = (denominatorFrac1 * denominatorFrac2);
     		if (newNumerator == 0)
         	{
         		result = "0";
@@ -68,8 +68,8 @@ public class FracCalc {
     	}
     	else if (operator.equals("/"))
     	{
-    		newNumerator = (numerator3 * denominator4);
-    		newDenominator = (denominator3 * numerator4);
+    		newNumerator = (numeratorFrac1 * denominatorFrac2);
+    		newDenominator = (denominatorFrac1 * numeratorFrac2);
     		if (newNumerator == 0)
         	{
         		result = "0";
@@ -79,8 +79,8 @@ public class FracCalc {
     	}
     	else if (operator.equals("+"))
     	{
-    		newNumerator = ((numerator3 * denominator4) + (numerator4 * denominator3));
-    		newDenominator = (denominator3 * denominator4);
+    		newNumerator = ((numeratorFrac1 * denominatorFrac2) + (numeratorFrac2 * denominatorFrac1));
+    		newDenominator = (denominatorFrac1 * denominatorFrac2);
     		if (newNumerator == 0)
         	{
         		result = "0";
@@ -90,8 +90,8 @@ public class FracCalc {
     	}
     	else if (operator.equals("-"))
     	{
-    		newNumerator = ((numerator3 * denominator4) - (numerator4 * denominator3));
-    		newDenominator = (denominator3 * denominator4);
+    		newNumerator = ((numeratorFrac1 * denominatorFrac2) - (numeratorFrac2 * denominatorFrac1));
+    		newDenominator = (denominatorFrac1 * denominatorFrac2);
     		if (newNumerator == 0)
         	{
         		result = "0";
@@ -103,10 +103,7 @@ public class FracCalc {
     	{
     		result = ("whole:" + wholeNum2 + " numerator:" + numerator2 + " denominator:" + denominator2);
     	}
-    	/*if (result.endsWith("/1"))
-    	{
-    		result = result.substring(0, result.indexOf("/"));
-    	}*/
+    	
     	
     	return result;
     	
@@ -131,20 +128,15 @@ public class FracCalc {
     		wholeNum = input.substring(0, underscore);
     		result  = stringToInt(wholeNum);
     		}
-    		//System.out.println(result);
-    		//return result;
     	} 
     	else if (input.contains("/"))
     	{
     		result = 0;
-    		//return result
     	}
     	else
     	{
     		result = stringToInt(input);
     	}
-    	//System.out.println(input);
-    	//System.out.println(result);
     	return result;
     	
     	/*
@@ -173,42 +165,44 @@ public class FracCalc {
     	*/
     }
     
-    public static int getNumerator (String operand2)
+    public static int getNumerator (String operand)
     {
     	String numerator;
-    	if (operand2.contains("_"))
+    	if (operand.contains("_"))
     	{
-    		int underscore = operand2.indexOf("_");
-    		if (operand2.contains("/"))
+    		int underscore = operand.indexOf("_");
+    		if (operand.contains("/"))
         	{
-        		int slash = operand2.indexOf("/");
-        		numerator = operand2.substring(underscore + 1, slash);
+        		int slash = operand.indexOf("/");
+        		numerator = operand.substring(underscore + 1, slash);
         		return stringToInt(numerator);
         	}
     		return 0;
     	}
-    	else if (operand2.contains("/"))
+    	else if (operand.contains("/"))
     	{
-    		int slash = operand2.indexOf("/");
-    		numerator = operand2.substring(0, slash);
+    		int slash = operand.indexOf("/");
+    		numerator = operand.substring(0, slash);
     		return stringToInt(numerator);
     	}
     		return 0;
     }
     
-    public static int getDenominator (String operand2)
+    public static int getDenominator (String operand)
     {
     	String denominator;
-    	if (operand2.contains("/"))
+    	if (operand.contains("/"))
     	{
-    		int slash = operand2.indexOf("/");
-    		denominator = operand2.substring(slash + 1);
+    		int slash = operand.indexOf("/");
+    		denominator = operand.substring(slash + 1);
     		return stringToInt(denominator);
     	}
     	return 1;
     }
     
-    public static String convertToMixed (String operand)
+    //public static String convertToMixedNum (Stirng operand)
+    
+    public static String convertToImproperFrac (String operand)
     {
     	int wholeNum = getWholeNum(operand);
     	int numerator = getNumerator(operand);
