@@ -53,7 +53,8 @@ public class FracCalc {
     	int denominatorFrac2 = getDenominator(fraction2);	//d
     	
     	int newNumerator, newDenominator;
-    	
+    	newNumerator = 0;
+    	newDenominator = 0;
     	
     	if (operator.equals("*"))
     	{   
@@ -103,6 +104,8 @@ public class FracCalc {
     	{
     		result = ("whole:" + wholeNum2 + " numerator:" + numerator2 + " denominator:" + denominator2);
     	}
+    	
+    	result = convertToMixedNum(newNumerator, newDenominator);
     	
     	
     	return result;
@@ -200,7 +203,21 @@ public class FracCalc {
     	return 1;
     }
     
-    //public static String convertToMixedNum (Stirng operand)
+    public static String convertToMixedNum (int improperNumerator, int improperDenominator)
+    {
+    	int wholeNum = improperNumerator/improperDenominator;
+    	int numerator = Math.abs( (improperNumerator % improperDenominator) / (gcf(improperNumerator, improperDenominator)) );
+    	int denominator = Math.abs( (improperDenominator) / (gcf(improperNumerator, improperDenominator)) );
+    	if (improperNumerator % improperDenominator == 0)
+    	{
+    		return "" + wholeNum;
+    	}
+    	else if (wholeNum == 0)
+    	{
+    		return ( improperNumerator / gcf(improperNumerator, improperDenominator) ) + "/" + ( improperDenominator / gcf(improperNumerator, improperDenominator) );
+    	}
+    	return wholeNum + "_" + numerator + "/" + denominator;    	
+    }
     
     public static String convertToImproperFrac (String operand)
     {
